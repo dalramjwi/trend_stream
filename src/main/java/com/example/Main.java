@@ -1,6 +1,7 @@
 package com.example;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -11,9 +12,8 @@ public class Main {
         try {
             // 파일 경로 지정
             Path filePath = Paths.get("src/main/resource/data.json");
-            
-            // 파일 읽기
-            String content = new String(Files.readAllBytes(filePath));
+     // UTF-8 인코딩으로 파일 읽기
+            String content = Files.readString(filePath, StandardCharsets.UTF_8);
             
             // 콘솔에 출력
             System.out.println("파일 내용:");
