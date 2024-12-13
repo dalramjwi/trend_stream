@@ -1,27 +1,34 @@
 package com.example;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) {
+        // JSON 파일 경로
+        Path filePath = Paths.get("src/main/resource/data.json");
+
         try {
-            // 파일 경로 지정
-            Path filePath = Paths.get("src/main/resource/data.json");
-     // UTF-8 인코딩으로 파일 읽기
-            String content = Files.readString(filePath, StandardCharsets.UTF_8);
-            
-            // 콘솔에 출력
-            System.out.println("파일 내용:");
-            System.out.println(content);
-        } catch (NoSuchFileException e) {
-            System.out.println("파일을 찾을 수 없습니다: " + e.getMessage());
+            // JSON 파일 읽기
+            String jsonContent = Files.readString(filePath, StandardCharsets.UTF_8);
+
+            // JSON 문자열을 JsonArray로 파싱
+            JsonArray jsonArray = JsonParser.parseString(jsonContent).getAsJsonArray();
+
+            // JSON 데이터 출력
+            System.out.println("JSON 데이터 출력:");
+            for (JsonElement element : jsonArray) {
+                System.out.println(element);
+            }
         } catch (IOException e) {
-            System.out.println("파일을 읽는 중 입출력 오류 발생: " + e.getMessage());
-        } 
+            System.out.println("파일 읽는 중 오류 발생: " + e.getMessage());
+        }
     }
 }
