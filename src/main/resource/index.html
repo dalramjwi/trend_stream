@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>trend stream</title>
+    <script>
+        async function fetchData() {
+            const response = await fetch('/data');
+            const data = await response.json();
+
+            const output = document.getElementById('output');
+            output.innerHTML = JSON.stringify(data, null, 2);
+        }
+
+        window.onload = fetchData;
+    </script>
+</head>
+<body>
+<h1>Trend Stream</h1>
+<pre id="output">로딩 중...</pre>
+</body>
+</html>
