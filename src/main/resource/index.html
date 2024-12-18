@@ -1,22 +1,45 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>trend stream</title>
-    <script>
-        async function fetchData() {
-            const response = await fetch('/data');
-            const data = await response.json();
-
-            const output = document.getElementById('output');
-            output.innerHTML = JSON.stringify(data, null, 2);
-        }
-
-        window.onload = fetchData;
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy JSON Data</title>
 </head>
 <body>
-<h1>Trend Stream</h1>
-<pre id="output">로딩 중...</pre>
+<h1>Dummy JSON Data</h1>
+
+<h2>From data.json</h2>
+<div id="data-container"></div>
+
+<h2>From Dummyjson API</h2>
+<div id="dummyjson-container"></div>
+
+<script>
+    // 기존 data.json 데이터 가져오기
+    fetch('/data')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('data-container');
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.innerHTML = `<p><strong>${item.name}</strong>: ${item.description}</p>`;
+                container.appendChild(div);
+            });
+        })
+        .catch(error => console.error('데이터 로딩 실패:', error));
+
+    // dummyjson API에서 데이터 가져오기
+    fetch('/dummyjson')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('dummyjson-container');
+            data.products.forEach(item => {
+                const div = document.createElement('div');
+                div.innerHTML = `<p><strong>${item.name}</strong>: ${item.description}</p>`;
+                container.appendChild(div);
+            });
+        })
+        .catch(error => console.error('dummyjson 데이터 로딩 실패:', error));
+</script>
 </body>
 </html>
